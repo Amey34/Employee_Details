@@ -1,0 +1,15 @@
+.container-fluid {
+    background-color: #adefd1ff;
+    color: #00203fff;
+    border: 1px solid #00203fff;
+}
+
+#button1 {
+    background-color: #00203fff;
+    color: #adefd1ff;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid #00203fff;
+}
