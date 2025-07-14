@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('connectDB.php');
+include('./config/connectDB.php');
 
 if (isset($_POST['login'])) {
     $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));

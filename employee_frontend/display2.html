@@ -39,6 +39,12 @@
         background-color: #adefd1ff;
       }
 
+      .row div {
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+
       #filter {
         margin: 0.5rem 0 1rem 0;
       }
@@ -75,10 +81,9 @@
       <select class="form-select" id="category" name="category">
         <option value="">Select Category</option>
         <option value="id">id</option>
-        <option value="name">name</option>
-        <option value="email">email</option>
-        <option value="mobile_no">mobile number</option>
-        <option value="gender">gender</option>
+        <option value="emp_id">employee id</option>
+        <option value="name_of_detail">name of the detail</option>
+        <option value="value_of_detail">value of the detail</option>
       </select>
       <input
         id="search"
@@ -89,11 +94,10 @@
     </div>
     <div class="container-fluid">
       <div class="row" id="row1">
+        <div class="col-1">ID</div>
         <div class="col-1">Employee ID</div>
-        <div class="col-3">Name</div>
-        <div class="col-3">Email</div>
-        <div class="col-2">Name of the detail</div>
-        <div class="col-3">Value of the detail</div>
+        <div class="col-5">Name of the detail</div>
+        <div class="col-5">Value of the detail</div>
       </div>
       <div class="row" id="row2"></div>
     </div>
@@ -101,7 +105,7 @@
     <script>
       $(document).ready(function () {
         $.ajax({
-          url: "displayAll.php",
+          url: "../employee_backend/display2.php",
           type: "GET",
           success: function (response) {
             $("#row2").html(response);
@@ -116,7 +120,7 @@
           let p = $("#category").val();
           if (q === "") {
             $.ajax({
-              url: "display.php",
+              url: "../employee_backend/display2.php",
               type: "GET",
               success: function (response) {
                 $("#row2").html(response);
@@ -127,7 +131,7 @@
             });
           } else {
             $.ajax({
-              url: "search.php",
+              url: "../employee_backend/search2.php",
               type: "POST",
               data: { value: q, cvalue: p },
               success: function (response) {

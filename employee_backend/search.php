@@ -6,7 +6,7 @@ if ($_SESSION['loggedin'] !== true) {
     exit;
 }
 
-include('connectDB.php');
+include('../config/connectDB.php');
 
 if ($_SERVER['REQUEST_METHOD']) {
     if (empty($_POST['value']) && empty($_POST['cvalue'])) {

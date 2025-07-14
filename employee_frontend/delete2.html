@@ -70,7 +70,7 @@
         $("#formData").on("submit", function (e) {
           e.preventDefault();
           $.ajax({
-            url: "delete2.php",
+            url: "../employee_backend/delete2.php",
             type: "POST",
             data: $("#formData").serialize(),
             success: function (response) {

@@ -6,35 +6,35 @@ if ($_SESSION['loggedin'] !== true) {
     exit;
 }
 
-include('connectDB.php');
+include('../config/connectDB.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $emp_id = trim(filter_var($_POST["emp_id"], FILTER_SANITIZE_NUMBER_INT));
     $name_of_detail = trim(htmlspecialchars($_POST["name_of_detail"]));
     $value_of_detail = trim(htmlspecialchars($_POST["value_of_detail"]));
-    if (empty($emp_id) || empty($name_of_detail) || empty($value_of_detail)) {
-        echo "Please provide all fields";
+    if (empty($emp_id) || empty($name_of_detail)) {
+        echo "Please provide employee id and name of detail";
         exit;
     } else {
-        $stmt = $conn->prepare("SELECT * FROM employee_personal_details WHERE id=?");
-        $stmt->bind_param("i", $emp_id);
+        $stmt = $conn->prepare("SELECT * FROM employee_details WHERE emp_id=? AND name_of_detail=?");
+        $stmt->bind_param("is", $emp_id, $name_of_detail);
         $stmt->execute();
 
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $stmt = $conn->prepare("INSERT INTO employee_details (emp_id, name_of_detail, value_of_detail) VALUES(?,?,?)");
-            $stmt->bind_param("iss", $emp_id, $name_of_detail, $value_of_detail);
+            $stmt = $conn->prepare("UPDATE employee_details SET value_of_detail=? WHERE emp_id=? AND name_of_detail=?");
+            $stmt->bind_param("sis", $value_of_detail, $emp_id, $name_of_detail);
             $stmt->execute();
 
             if ($stmt) {
                 echo 1;
                 exit;
             } else {
-                echo "Could not insert data";
+                echo "Could not update data";
                 exit;
             }
         } else {
-            echo "Employee doesnt exist";
+            echo "Either employee doesnt exist or name of detail doesnt exist";
             exit;
         }
     }

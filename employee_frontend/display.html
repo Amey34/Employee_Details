@@ -25,7 +25,6 @@
 
       .row > div {
         border: 1px solid black;
-        padding: 0.5rem;
       }
 
       #row1 {
@@ -37,12 +36,6 @@
       #row2 {
         color: #00203fff;
         background-color: #adefd1ff;
-      }
-
-      .row div {
-        white-space: normal;
-        overflow-wrap: break-word;
-        word-break: break-word;
       }
 
       #filter {
@@ -78,12 +71,21 @@
   </head>
   <body>
     <div class="d-flex justify-content-end gap-2 px-3" id="filter">
+      <select class="form-select" id="sort" name="sort">
+        <option value="">Sort By</option>
+        <option value="id">id</option>
+        <option value="name">name</option>
+        <option value="email">email</option>
+        <option value="mobile_no">mobile number</option>
+        <option value="gender">gender</option>
+      </select>
       <select class="form-select" id="category" name="category">
         <option value="">Select Category</option>
         <option value="id">id</option>
-        <option value="emp_id">employee id</option>
-        <option value="name_of_detail">name of the detail</option>
-        <option value="value_of_detail">value of the detail</option>
+        <option value="name">name</option>
+        <option value="email">email</option>
+        <option value="mobile_no">mobile number</option>
+        <option value="gender">gender</option>
       </select>
       <input
         id="search"
@@ -95,17 +97,24 @@
     <div class="container-fluid">
       <div class="row" id="row1">
         <div class="col-1">ID</div>
-        <div class="col-1">Employee ID</div>
-        <div class="col-5">Name of the detail</div>
-        <div class="col-5">Value of the detail</div>
+        <div class="col-2">Name</div>
+        <div class="col-2">Email</div>
+        <div class="col-1">Mobile Number</div>
+        <div class="col-1">DOB</div>
+        <div class="col-1">Gender</div>
+        <div class="col-3">Address</div>
+        <div class="col-1">Created_At</div>
       </div>
       <div class="row" id="row2"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
       $(document).ready(function () {
+        let s = "";
+        let p = "";
+        let q = "";
         $.ajax({
-          url: "display2.php",
+          url: "../employee_backend/display.php",
           type: "GET",
           success: function (response) {
             $("#row2").html(response);
@@ -115,13 +124,47 @@
           },
         });
 
+        $("#sort").mouseup(function () {
+          s = $("#sort").val();
+          p = $("#category").val();
+          q = $("#search").val();
+          if ($("#sort").val().trim() != "") {
+            if (q === "") {
+              $.ajax({
+                url: "../employee_backend/display.php",
+                type: "GET",
+                data: { sort: s },
+                success: function (response) {
+                  $("#row2").html(response);
+                },
+                error: function (response) {
+                  alert(response);
+                },
+              });
+            } else {
+              $.ajax({
+                url: "../employee_backend/search.php",
+                type: "POST",
+                data: { value: q, cvalue: p, sort: s },
+                success: function (response) {
+                  $("#row2").html(response);
+                },
+                error: function (response) {
+                  alert(response);
+                },
+              });
+            }
+          }
+        });
+
         $("#search").keyup(function () {
           let q = $(this).val();
           let p = $("#category").val();
           if (q === "") {
             $.ajax({
-              url: "display2.php",
+              url: "../employee_backend/details.php",
               type: "GET",
+              data: { sort: s },
               success: function (response) {
                 $("#row2").html(response);
               },
@@ -131,9 +174,9 @@
             });
           } else {
             $.ajax({
-              url: "search2.php",
+              url: "../employee_backend/search.php",
               type: "POST",
-              data: { value: q, cvalue: p },
+              data: { value: q, cvalue: p, sort: s },
               success: function (response) {
                 $("#row2").html(response);
               },

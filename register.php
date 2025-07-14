@@ -2,7 +2,7 @@
 
 session_start();
 
-include('connectDB.php');
+include('./config/connectDB.php');
 
 if (isset($_POST['signup'])) {
 

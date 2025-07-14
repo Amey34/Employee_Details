@@ -6,7 +6,7 @@ if ($_SESSION['loggedin'] !== true) {
     exit;
 }
 
-include('connectDB.php');
+include('../config/connectDB.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     $stmt = $conn->prepare("SELECT * FROM employee_details");

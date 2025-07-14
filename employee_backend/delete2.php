@@ -6,7 +6,7 @@ if ($_SESSION['loggedin'] !== true) {
     exit;
 }
 
-include('connectDB.php');
+include('../config/connectDB.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $emp_id = trim(filter_var($_POST["emp_id"], FILTER_SANITIZE_NUMBER_INT));

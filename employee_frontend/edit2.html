@@ -29,16 +29,10 @@
   </head>
   <body>
     <div class="container-fluid mt-1 p-5" style="width: 70%">
-      <h3 class="text-center">ADD DETAILS</h3>
+      <h3 class="text-center">EDIT DETAILS</h3>
       <form id="formData">
         <label for="emp_id" class="form-label">Enter employee id</label>
-        <input
-          type="number"
-          id="emp_id"
-          name="emp_id"
-          class="form-control"
-          required
-        />
+        <input type="number" id="emp_id" name="emp_id" class="form-control" />
         <label for="name_of_detail" class="form-label"
           >Enter name of detail</label
         >
@@ -47,7 +41,6 @@
           id="name_of_detail"
           name="name_of_detail"
           class="form-control"
-          required
         />
         <label for="value_of_detail" class="form-label"
           >Enter value of detail</label
@@ -57,7 +50,6 @@
           id="value_of_detail"
           name="value_of_detail"
           class="form-control"
-          required
         />
         <div>
           <button class="btn" type="submit" id="button1">SUBMIT</button>
@@ -70,12 +62,12 @@
         $("#formData").on("submit", function (e) {
           e.preventDefault();
           $.ajax({
-            url: "add2.php",
+            url: "../employee_backend/edit2.php",
             type: "POST",
             data: $("#formData").serialize(),
             success: function (response) {
               if (response == 1) {
-                alert("Data inserted successfully");
+                alert("Data updated successfully");
                 $("#formData")[0].reset();
               } else {
                 alert(response);
