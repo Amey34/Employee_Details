@@ -2,7 +2,7 @@
 
 session_start();
 if ($_SESSION['loggedin'] !== true) {
-    header("Location: ../authentication/loginh.php");
+    header("Location: ../loginh.php");
     exit;
 }
 
